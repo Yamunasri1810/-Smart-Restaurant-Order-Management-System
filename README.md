@@ -1,1 +1,1 @@
-# -Smart-Restaurant-Order-Management-System
+# Smart-Restaurant-Order-Management-System
