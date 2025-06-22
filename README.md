@@ -1,1 +1,1 @@
-# Smart-Restaurant-Order-Management-System
+# Hotel Menu Management and Visualization Suite
