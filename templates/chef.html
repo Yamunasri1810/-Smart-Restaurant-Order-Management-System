@@ -50,5 +50,12 @@
     {% else %}
         <p>No current orders.</p>
     {% endif %}
+    <script>
+    // Automatically refresh every 30 seconds to fetch new orders
+    setInterval(() => {
+        window.location.reload();
+    }, 30000); // 30000 milliseconds = 30 seconds
+</script>
+
 </body>
 </html>
