@@ -33,7 +33,7 @@ Dashboard showing:
 
 ![Screenshot (266)](https://github.com/user-attachments/assets/130e66a2-6aa1-4eb6-a97b-0d35f25f51ad)
 
-![Screenshot (267)](https://github.com/user-attachments/assets/59dbee83-5495-4c0f-b453-c88c4d8eb7fa)
+![Screenshot (268)](https://github.com/user-attachments/assets/8ccd9e0d-3dab-4295-9ca1-58e73cc9e529)
 
 Most and least ordered dishes.
 
