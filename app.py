@@ -4,11 +4,11 @@ from datetime import datetime, timedelta
 from collections import defaultdict
 import os
 import io
-# import csv
-# from fpdf import FPDF
+import csv
+from fpdf import FPDF
 
 app = Flask(__name__)
-app.secret_key = os.environ.get('secret_key')
+app.secret_key = 'secret123456123456'
 
 # MongoDB setup
 uri = os.environ.get('uri')
@@ -52,6 +52,58 @@ def register():
 def customer_page():
     return render_template('menu.html', dishes=menu, datetime=datetime)
 
+@app.route('/submit_order', methods=['POST'])
+def submit_order():
+    if 'user' not in session:
+        return jsonify({"success": False, "message": "Not logged in."})
+
+    data = request.get_json()
+    items = data.get("items", [])
+    table_number = data.get("table_number")
+
+    if not items or not table_number:
+        return jsonify({"success": False, "message": "Incomplete order."})
+
+    orders_col.insert_one({
+        "user_name": session['user']['name'],
+        "user_phone": session['user']['phone'],
+        "items": items,
+        "table_number": table_number,
+        "timestamp": datetime.now(),
+        "status": "pending"
+    })
+    return jsonify({"success": True, "message": "Order sent to kitchen!"})
+
+@app.route('/get_bill')
+def get_bill():
+    if 'user' not in session:
+        return jsonify({"success": False, "message": "Not logged in."})
+
+    orders = list(orders_col.find({"user_phone": session['user']['phone'], "status": "pending"}))
+
+    if not orders:
+        return jsonify({"success": False, "message": "No pending orders found."})
+
+    total = 0
+    bill_items = []
+
+    for order in orders:
+        for item in order['items']:
+            dish = next((d for d in menu if d['id'] == item['id']), None)
+            if dish:
+                item_total = item['quantity'] * dish['price']
+                total += item_total
+                bill_items.append({
+                    "name": dish['name'],
+                    "quantity": item['quantity'],
+                    "total_price": item_total
+                })
+
+    # Mark orders as completed
+    orders_col.update_many({"user_phone": session['user']['phone'], "status": "pending"}, {"$set": {"status": "completed"}})
+
+    return jsonify({"success": True, "orders": bill_items, "total": total})
+
 @app.route('/chef')
 def chef_page():
     chef_orders = list(orders_col.find({"status": "pending"}).sort("timestamp", -1))
@@ -91,8 +143,8 @@ def owner_dashboard():
 
         sales_trend[time_label] += order_total
 
-    most_ordered = max(dish_count.items(), key=lambda x: x[1], default=(None, 0))
-    least_ordered = min(dish_count.items(), key=lambda x: x[1], default=(None, 0))
+    most_ordered = max(dish_count.items(), key=lambda x: x[1], default=("None", 0))
+    least_ordered = min(dish_count.items(), key=lambda x: x[1], default=("None", 0))
     weekly_profits = dict(sales_trend)
 
     sorted_customers = sorted(customer_freq.items(), key=lambda x: x[1], reverse=True)[:5]
@@ -108,7 +160,6 @@ def owner_dashboard():
         weekly_profits=weekly_profits,
         regular_customers=regular_customers
     )
-
 
 @app.route('/api/owner_data')
 def owner_data():
@@ -197,4 +248,4 @@ def owner_data():
     })
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True)
