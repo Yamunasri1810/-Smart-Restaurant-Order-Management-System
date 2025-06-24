@@ -46,9 +46,13 @@ Total profit calculation.
 Export sales data as CSV or PDF.
 
 🛠️ Tech Stack
+
 Technology	                  Purpose
+
 Flask	                    Backend framework
+
 MongoDB	                  Database for user and order data
+
 HTML, CSS, JS	            Frontend
 
 :
