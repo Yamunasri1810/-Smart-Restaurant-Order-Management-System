@@ -246,6 +246,40 @@ def owner_data():
         "sales_data": list(sales_trend.values()),
         "top_customers": top_customers
     })
+@app.route('/export_report', methods=['POST'])
+def export_report():
+    data = request.get_json()
+    dish_image_data = data['dishImage'].split(',')[1]
+    sales_image_data = data['salesImage'].split(',')[1]
+
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=14)
+    pdf.cell(200, 10, "Sales Dashboard Report", ln=True, align="C")
+    pdf.ln(10)
+
+    # Save and insert Dish Chart
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile1:
+        tmpfile1.write(b64decode(dish_image_data))
+        tmpfile1.flush()
+        pdf.cell(0, 10, "Dish Frequency Chart", ln=True)
+        pdf.image(tmpfile1.name, x=10, w=180)
+
+    pdf.add_page()
+
+    # Save and insert Sales Chart
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmpfile2:
+        tmpfile2.write(b64decode(sales_image_data))
+        tmpfile2.flush()
+        pdf.cell(0, 10, "Sales Trend Chart", ln=True)
+        pdf.image(tmpfile2.name, x=10, w=180)
+
+    # Send PDF
+    response = make_response(pdf.output(dest='S').encode('latin1'))
+    response.headers.set('Content-Disposition', 'attachment', filename='dashboard_report.pdf')
+    response.headers.set('Content-Type', 'application/pdf')
+    return response
+
 
 if __name__ == '__main__':
     app.run(debug=True)
