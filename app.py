@@ -8,7 +8,7 @@ import io
 # from fpdf import FPDF
 
 app = Flask(__name__)
-app.secret_key = 'secret123456123456'
+app.secret_key = os.environ.get('secret_key')
 
 # MongoDB setup
 uri = os.environ.get('uri')
