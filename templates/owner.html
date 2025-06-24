@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -70,6 +72,20 @@
         th {
             background-color: #f0e6dc;
         }
+
+        .filters button {
+            margin: 5px;
+            padding: 10px 20px;
+            background-color: #a0522d;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .filters button:hover {
+            background-color: #703a0f;
+        }
     </style>
 </head>
 <body>
@@ -103,6 +119,11 @@
                 <tbody id="topCustomers"></tbody>
             </table>
         </div>
+    </div>
+    <div class = 'filters'>
+        <br>
+    <button onclick="exportData('csv')">Export CSV</button>
+    <button onclick="exportData('pdf')">Export PDF</button>
     </div>
 
     <script>
@@ -158,7 +179,10 @@
                     });
                 });
         }
-
+        function exportData(type) {
+        const activePeriod = document.querySelector('.filters button.active')?.id?.split('-')[1] || 'week';
+        window.location.href = `/api/owner_data?period=${activePeriod}&export=${type}`;
+        }
         window.onload = () => loadDashboard('week');
     </script>
 </body>
