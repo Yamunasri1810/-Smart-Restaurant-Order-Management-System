@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,11 +121,34 @@
     <div class = 'filters'>
         <br>
     <button onclick="exportData('csv')">Export CSV</button>
-    <button onclick="exportData('pdf')">Export PDF</button>
+    <button onclick="exportPDFReport()">Export PDF</button>
     </div>
 
     <script>
         let dishChart, salesChart;
+    function exportPDFReport() {
+        const dishImage = dishChart.toBase64Image();
+        const salesImage = salesChart.toBase64Image();
+
+        fetch('/export_report', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                dishImage: dishImage,
+                salesImage: salesImage
+            })
+        })
+        .then(res => res.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "dashboard_report.pdf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        });
+    }
 
         function loadDashboard(period) {
             document.querySelectorAll('.filters button').forEach(btn => btn.classList.remove('active'));
