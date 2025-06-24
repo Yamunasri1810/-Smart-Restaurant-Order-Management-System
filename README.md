@@ -1,12 +1,12 @@
-# Hotel Menu Management and Visualization Suite
+## Hotel Menu Management and Visualization Suite
 
-A full-stack web application and Visualization Suit for managing restaurant orders, built with Flask, MongoDB, and HTML/CSS/JS. The system supports customer ordering, chef dashboards, and an owner dashboard with sales analytics and export options.
+ A full-stack web application and Visualization Suit for managing restaurant orders, built with Flask, MongoDB, and HTML/CSS/JS. The system supports customer ordering, chef dashboards, and an owner dashboard with sales analytics and export options.
 
 ![Screenshot (265)](https://github.com/user-attachments/assets/41dc3a84-7061-4a1d-867b-4589a488b808)
 
-# 📌 Features
+## 📌 Features
 
-🍽️ Customers
+# 🍽️ Customers
 View a visually appealing digital menu with images.
 
 ![Screenshot (260)](https://github.com/user-attachments/assets/d5755f25-3b45-49ab-a5b6-347abfbb2161)
@@ -19,7 +19,7 @@ View a generated bill and receive a thank-you message.
 
 ![Screenshot (263)](https://github.com/user-attachments/assets/370b981c-3cee-46b2-b976-fdec6925097f)
 
-👨‍🍳 Chef
+# 👨‍🍳 Chef
 Real-time view of incoming orders.
 
 ![Screenshot (264)](https://github.com/user-attachments/assets/35b327b6-fa90-48aa-9b93-d1ea984bc5a8)
@@ -28,7 +28,7 @@ Checkbox interface to manage dish preparation.
 
 Page auto-refreshes for new orders.
 
-📈 Owner
+# 📈 Owner
 Dashboard showing:
 
 ![Screenshot (266)](https://github.com/user-attachments/assets/130e66a2-6aa1-4eb6-a97b-0d35f25f51ad)
@@ -45,7 +45,7 @@ Total profit calculation.
 
 Export sales data as CSV or PDF.
 
-🛠️ Tech Stack
+## 🛠️ Tech Stack
 
 Technology	                  Purpose
 
@@ -55,12 +55,11 @@ MongoDB	                  Database for user and order data
 
 HTML, CSS, JS	            Frontend
 
-:
 
-# 🔄 Application Workflow
+## 🔄 Application Workflow
 The application handles 3 user roles — Customer, Chef, and Owner — each with a specific flow:
 
-👤 1. Customer Workflow
+# 👤 1. Customer Workflow
 Login/Register using phone number.
 
 Redirected to the Menu Page.
@@ -81,7 +80,7 @@ Chef's screen is auto-refreshed to remove completed orders.
 
 A thank-you page is shown before logout.
 
-🍳 2. Chef Workflow
+# 🍳 2. Chef Workflow
 Log in as Chef using phone number.
 
 Redirected to Chef Dashboard.
@@ -98,7 +97,7 @@ Dish names and quantities
 
 Orders disappear from the screen when the customer completes payment.
 
-🧑‍💼 3. Owner Workflow
+# 🧑‍💼 3. Owner Workflow
 Log in as Owner using phone number.
 
 Redirected to Owner Dashboard with analytics:
