@@ -1,5 +1,7 @@
 Flask>=2.3,<4
-pymongo>=4.3,<5
+
+pymongo[srv]>=4.3,<5
+
 fpdf2>=2.7,<3
+
 Pillow>=10.0,<11
-pymongo[srv]==3.12
